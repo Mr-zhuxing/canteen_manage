@@ -41,22 +41,24 @@
                         <th>编号</th>
                         <th>图标</th>
                         <th>名称</th>
-                        <th>价格</th>
-                        <th>邮费</th>
+                        <th>原价</th>>
+                        <th>现价</th>
+                        <th>数量</th>
                         <th class="text-center">操作</th>
                     </tr>
                     </thead>
                     <tbody>        
                         <% for(var i=0;i<list.length;i++){%>
                             <tr>
-                                <td><%=i+1%></td>
-                                <td><img src="/<%=list[i].pic%>" alt="" style="width: 60px;height: 40px;"></td>
-                                <td><%=list[i].title%></td>
-                                <td><%=list[i].price%></td>
-                                <td><%=list[i].fee%></td>
+                                <td><%=list[i].ID%></td>
+                                <td><img src="<%=list[i].IMAGE1%>" alt="" style="width: 60px;height: 40px;"></td>
+                                <td><%=list[i].NAME%></td>
+                                <td><%=list[i].ORI_PRICE%></td>
+                                <td><%=list[i].PRESENT_PRICE%></td>
+                                <td><%=list[i].AMOUNT%></td>
                                 <td class="text-center">
-                                    <a href="/admin/product/edit?id=<%=list[i]._id%>" class="btn btn-success">修改</a>
-                                    <a href="/admin/product/doDelete?id=<%=list[i]._id%>&pic=<%=list[i].pic%>" class="btn btn-danger">删除</a>                                    
+                                    <a href="/admin/product/edit?id=<%=list[i].ID%>" class="btn btn-success">修改</a>
+                                    <a href="/admin/product/doDelete?ID=<%=list[i].ID%>&IMAGE1=<%=list[i].IMAGE1%>" class="btn btn-danger">删除</a>                                    
                                 </td>
                             </tr>
                         <%}%>

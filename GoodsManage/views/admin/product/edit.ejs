@@ -21,24 +21,24 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive input-form">
-                        <form action="/admin/product/doEdit" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="id" id="" value="<%=list[0]._id%>">
-                            <input type="hidden" name="oldpic" id="" value="<%=list[0].pic%>">
+                        <form action="/admin/product/doEdit?oldUrl=<%=list[0].MALL_CATEGORY_ID%>/<%=list[0].SUB_ID%>" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="id" id="" value="<%=list[0].ID%>">
+                            <input type="hidden" name="oldpic" id="" value="<%=list[0].IMAGE1%>">
                             <ul>
-                                <li>  商品名称: <input type="text" name="title" value="<%=list[0].title%>"/></li>
+                                <li>  商品名称: <input type="text" name="NAME" value="<%=list[0].NAME%>"/></li>
 
-                                <li>  商品图片: <input type="file" name="pic""/></li>
+                                <li>  商品图片: <input type="file" name="IMAGE1""/></li>
                                 
                                 <li>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <img src="/<%=list[0].pic%>" alt="" style="width: 120px; height: 100px;">
+                                    <img src="<%=list[0].IMAGE1%>" alt="" style="width: 120px; height: 100px;">
                                 </li>
                                 
-                                <li>  商品价格: <input type="text" name="price" value="<%=list[0].price%>"/></li>
-                                <li>  商品邮费: <input type="text" name="fee" value="<%=list[0].fee%>"/></li>
+                                <li>  商品原价: <input type="text" name="ORI_PRICE" value="<%=list[0].ORI_PRICE%>"/></li>
+                                <li>  商品现价: <input type="text" name="PRESENT_PRICE" value="<%=list[0].PRESENT_PRICE%>"/></li>
 
                                 <li>
                                     商品描述:
-                                    <textarea name="description" id="" cols="60" rows="8"><%=list[0].description%></textarea>
+                                    <textarea name="DETAIL" id="" cols="60" rows="8"><%=list[0].DETAIL%></textarea>
                                 </li>
 
                                 <li>

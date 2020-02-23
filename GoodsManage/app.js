@@ -1,5 +1,5 @@
 var express = require('express');
-var session = require('express-session')
+var session = require('express-session');
 var admin = require('./routes/admin.js');
 var index = require('./routes/index.js')
 //form表单设置enctype="multipart/form-data"时，body-parser req.body就不管用了
