@@ -16,7 +16,7 @@ router.use(function (req, res, next) {
   console.log(req.url)
   if (req.url == '/login' || req.url == '/doLogin' || req.url == '/myDelete' || req.url == '/register' || req.url == '/doRegister' || req.url == '/admin/product/fenyeFind') next();
   else {
-    if (req.session.userinfo && req.session.userinfo.username != '') {
+    if (req.session.userinfo && req.session.userinfo.name != '') {
       next()
     } else {
       res.redirect('/login');
@@ -42,7 +42,7 @@ router.post('/doLogin', async function (req, res) {
   }, function (err, data) {
     if (data.length > 0) {
       console.log('登录成功');
-      req.session.userinfo = data[0];
+      req.session.userinfo = data[0];//设置session数据
       req.app.locals['userinfo'] = req.session.userinfo;//模板引擎的全局的值
       res.redirect('/admin/product');
     } else {

@@ -1,5 +1,6 @@
 const state = {
     isLogin: false,
+    userId: '',
   },
   mutations = {
     setLoginState(state, OK) {
@@ -8,10 +9,16 @@ const state = {
     getLoginState(state) {
       return state.isLogin;
     },
+    setUserId(state, id) {
+      state.userId = id;
+    }
   },
   getters = {
     getLoginState: state => {
       return state.isLogin;
+    },
+    getUserId: state =>{
+      return state.userId;
     }
   },
   actions = {

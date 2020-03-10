@@ -76,6 +76,16 @@ export default {
       })
         .then(response => {
           if (response.data.code == 200) {
+            let myCookie = document.cookie.split(";");
+            let userIdReg = /(^userID=)/g;
+            let userID = myCookie
+              .filter((item, index) => {
+                if (userIdReg.test(item)) {
+                  return item;
+                }
+              })[0]
+              .split("=")[1];
+            this.$store.commit("user/setUserId", userID);
             this.$store.commit("user/setLoginState", true);
             Toast.success("登录成功");
             this.$router.push("/Main");
@@ -112,7 +122,7 @@ export default {
           withCredentials: true
         })
           .then(result => {
-            localStorage.removeItem('cartInfo');
+            localStorage.removeItem("cartInfo");
             Toast.success("退出成功");
           })
           .catch(err => {
@@ -128,7 +138,11 @@ export default {
     // console.log(this.$route.query.redirect);
     // 能到这个页面。必定是 1.在这个页面刷新。2.需要权限，重定向过来有query参数 3.从其他普通页面链接过来，则不携带query参数
     // 在login页面刷新时是没有query参数的，不改变路由。当有query参数时，就改变到参数携带的路由上。
-    if (this.$route.query.redirect && this.$route.query.redirect != "/login" && this.$store.getters['user/getLoginState']) {
+    if (
+      this.$route.query.redirect &&
+      this.$route.query.redirect != "/login" &&
+      this.$store.getters["user/getLoginState"]
+    ) {
       this.$router.push(this.$route.query.redirect);
     }
   }

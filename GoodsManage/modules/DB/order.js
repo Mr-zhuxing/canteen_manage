@@ -5,101 +5,83 @@ const goods = require('./goods.js');
 const Schema = mongoose.Schema;
 // 设置表结构
 var mySchema = new Schema({
-    id: {
-        type: Number,
-        required: true, //设置必须有值
-        unique: true //设置值唯一
-    },
-    user_account: {
-        type: Number,
-        required: true, //设置必须有值
-    },
-    goods_id: {
-        type: Number,
-        required: true, //设置必须有值
-    },
-    finish: {
-        type: Boolean,
-        required: true, //设置必须有值
-    },
-    add_time: {
-        type: Number,
-        required: true,
-        default: Date.now()
-    },
-    quantity: {
-        type: Number,
-        required: true
-    },
-    createTime: {
-        type: Date,
-        default: Date.now()
-    },
-    updateTime: {
-        type: Date,
-        default: Date.now()
-    }
+  ID: {
+    type: String,
+    required: true,
+  },
+  user_account: {
+    type: String,
+    required: true, //设置必须有值
+  },
+  user_name: {
+    type: String,
+  },
+  goods_id: {
+    type: String,
+    required: true, //设置必须有值
+  },
+  goods_name: {
+    type: String,
+  },
+  time: {
+    type: Number,
+    required: true,
+  },
+  state: {
+    type: String,
+    required: true, //设置必须有值
+  },
+  count: {
+    type: Number,
+    required: true,
+  },
+  goodsPrice: {
+    type: String,
+    required: true,
+  },
+  goodsTotalPrice: {
+    type: String,
+    required: true,
+  },
 }, {
-    timestamps: {
-        createdAt: 'createTime',
-        updatedAt: 'updateTime'
-    }
+  timestamps: {
+    createdAt: 'createTime',
+    updatedAt: 'updateTime'
+  }
 }); //timestamps 用于记录创建和修改时间
 mySchema.set('collection', 'order');
 mySchema.statics._findById = function (_id, cb) {
-    var _this = this;
-    _this.find({
-        id: _id
-    }, function (err, data) {
-        cb(err, data);
-    })
+  var _this = this;
+  _this.find({
+    id: _id
+  }, function (err, data) {
+    cb(err, data);
+  })
 };
-mySchema.statics._insertOne = function (obj, cb) {
-    var _this = this;
-    var lock_1 = false;
-    var lock_2 = false;
-    var doc1 = new _this(obj)
-    user._findOne({
-        account: obj["user_account"]
-    }, function (err, data) {
-        if (data) {
-            lock_1 = true;
-            // console.log('ok1')
+mySchema.statics._findOrders = function (condition) {
+  var _this = this;
+  return new Promise((resolve, reject) => {
+    _this.find(condition).then((result) => {
+      result = JSON.parse(JSON.stringify(result));
+      return result
+    }).then(result => {
+      let num = 0;
+      //   根据商品id查商品信息
+      result.forEach(async (item, index, arr) => {
+        let goodsInfo = await goods.find({
+          ID: item.goods_id
+        });
+        goodsInfo = goodsInfo[0];
+        item.NAME = goodsInfo.NAME;
+        item.IMAGE1 = goodsInfo.IMAGE1;
+        num++;
+        if (num == result.length) {
+          result = JSON.parse(JSON.stringify(result));
+          resolve(result)
         }
-        if(lock_1 && lock_2){
-            doc1.save(function (err, doc) {
-                cb(err, doc);
-            })
-        }
+      })
     })
-    goods._findById(obj["goods_id"], function (err, data) {
-        if (data.length > 0) {
-            lock_2 = true;
-            // console.log('ok2')
-        }
-        if(lock_1 && lock_2){
-            doc1.save(function (err, doc) {
-                cb(err, doc);
-            })
-        }
-    })
-
-};
-mySchema.statics._updateById = function (_id, doc, cb) {
-    var _this = this;
-    _this.update({
-        id: _id
-    }, doc, function (err, result) {
-        cb(err, result);
-    })
-};
-mySchema.statics._deleteOneById = function (_id, cb) {
-    var _this = this;
-    _this.findOneAndRemove({
-        id: _id
-    }, function (err, doc) {
-        cb(err, doc);
-    })
+  })
 };
 
 
@@ -115,4 +97,3 @@ mySchema.statics._deleteOneById = function (_id, cb) {
 
 
 module.exports = mongoose.model('order', mySchema);
-

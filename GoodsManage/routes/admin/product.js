@@ -6,9 +6,22 @@ var router = express.Router();
 var goods = require('../../modules/DB/goods.js')
 
 router.get('/', async (req, res) => {
+  let count = await goods.where().count();
+  let startPage = 1;
+  let endPage = 1;
+  if(count>10){
+    startPage = 1;
+    endPage = 10;
+  }else{
+    startPage = 1;
+    endPage = count;
+  }
   let data = await goods.find().skip(0).limit(10).exec();
   res.render('admin/product/index.ejs', {
-    list: data
+    list: data,
+    nowPage: 1,
+    startPage,
+    endPage,
   })
 
 })
@@ -134,11 +147,29 @@ router.get('/doDelete', async function (req, res) {
 
 // 分页查询
 router.get('/fenyeFind', async (req, res) => {
-  let start = 2; //第几页
+  if(req.query.page == 0){
+    res.redirect('/admin/product');
+  }
+  let start = req.query.page; //第几页
   let num = 10; //一页数目
   start = (start - 1) * num;
-  var result = await goods.find().skip(start).limit(num).exec();
-  res.json(result);
+  var data = await goods.find().skip(start).limit(num).exec();
+  let allCount = goods.where().count();
+  let nowCount = parseInt(req.query.page)*10;
+  let startPage =parseInt(req.query.page);
+  let endPage;
+  let nowPage = startPage;
+  if(allCount-nowCount<100){
+    endPage = Math.ceil(allCount/10);
+  }else{
+    endPage = startPage + 10;
+  }
+  res.render('admin/product/index.ejs', {
+    list: data,
+    nowPage,
+    startPage,
+    endPage,
+  })
 })
 
 module.exports = router;

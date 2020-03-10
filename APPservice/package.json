@@ -9,6 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "alipay-sdk": "^3.0.8",
     "debug": "^4.1.1",
     "koa": "^2.7.0",
     "koa-convert": "^1.2.0",

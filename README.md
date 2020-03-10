@@ -57,6 +57,7 @@ import { Button } from 'vant';
 3只要设置了session 就会 在浏览器的 cookie中设置一个sessionid
 3. cookie不能设置中文，需要转化为base64编码： new Buffer(JSON.stringify(ctx.session.userInfo)).toString('base64')  
   转化回来是：new Buffer(ctx.cookies.get('userInfo'),'base64').toString()  
+4. 注意mongoose查询到的result是不能修改的。需要复制属性到新对象中(比如JSON.parse(JSON.stringify(result));)
 
 
 
@@ -64,3 +65,4 @@ import { Button } from 'vant';
 1. router.beforeEach()是全局导航钩子，在进入路由前执行。(router.beforeEach()在app.vue的create()之前就会执行一次。所以刷新页面要注意)
 2. 注意不要出现当前路由跳到当前路由的操作，会报错NavigationDuplicated:导航重复.
 3. keep-alive 标签套在router-view上可以让该路由加载过后，下次进来就不重新访问服务器。(除非你再刷新页面)
+4. (promise相关)数组foreach配合async函数时要注意await前是同步的遍历完所有，产生了多个异步任务，这些任何的执行顺序不确定。(解决方法是在foreach前创建一个变量记数即可。因为任务完成后回调函数(相当于await后的代码)是一个一个执行的，所以不存在同时读这个变量的可能)

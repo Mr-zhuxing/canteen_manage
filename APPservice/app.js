@@ -13,7 +13,9 @@ const logger = require('koa-logger')
 const index = require('./routes/index')
 const user = require('./routes/user')
 const goods = require('./routes/goods')
+const order = require('./routes/order.js')
 const test = require('./routes/test.js')
+const alipay = require('./routes/alipay.js')
 const session = require('koa-session');
 const SESSION_CONFIG = require('./modules/midderWare/session.config')
 
@@ -66,11 +68,12 @@ app.on('error', (err, ctx) => {
 
 
 // 安装路由
-app.use(index.routes(), index.allowedMethods())
-app.use(user.routes(), user.allowedMethods())
-app.use(goods.routes(), goods.allowedMethods())
+app.use(index.routes(), index.allowedMethods());
+app.use(user.routes(), user.allowedMethods());
+app.use(goods.routes(), goods.allowedMethods());
 app.use(test.routes(), test.allowedMethods());
-
+app.use(order.routes(), order.allowedMethods());
+app.use(alipay.routes(),alipay.allowedMethods());
 
 
 

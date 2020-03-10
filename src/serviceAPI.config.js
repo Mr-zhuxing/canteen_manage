@@ -13,7 +13,8 @@ const URL = {
     getCategorySubList:LOCALURL+'goods/getCategorySubList',   //得到小类信息
     getGoodsListByCategorySubID:LOCALURL+'goods/getGoodsListByCategorySubID',   //得到小类商品信息
     mohuQuery:LOCALURL+'goods/mohuQuery',//模糊查询商品
-
+    confirmBuy: LOCALURL+'order/confirmBuy',//确认购买
+    getOrder: LOCALURL+'order/getOrder', // 获取订单数据
     test_ws: LOCALURL+'test/ws',
 }
 
