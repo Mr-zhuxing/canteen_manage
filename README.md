@@ -1,5 +1,5 @@
 # vue-koa2
-
+![Image text](https://github.com/Mr-zhuxing/canteen_manage/blob/master/GoodsManage/public/goodsImg/0/0/0.jpg)
 > A Vue.js project
 
 ## Build Setup
